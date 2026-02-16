@@ -17,10 +17,10 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ProductDetail'>;
 
 export const formatDate = (dateString?: string): string => {
   if (!dateString) return 'N/A';
-  
+
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return dateString;
-  
+
   return date.toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long',
@@ -60,17 +60,16 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
         },
       ]);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'Error inesperado';
+      const message = err instanceof Error ? err.message : 'Error inesperado';
       Alert.alert('Error', message);
     } finally {
       setDeleting(false);
     }
   };
-  
-  const productName = 
+
+  const productName =
     product.name || product.title || product.label || 'Sin nombre';
-  const productDescription = 
+  const productDescription =
     product.description || product.summary || 'Sin descripción';
   const logo = product.logo as string | undefined;
   const releaseDate = product.date_release as string | undefined;
@@ -78,7 +77,35 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
 
   return (
     <>
-      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+      >
+        <View style={styles.infoTitle}>
+          <View style={styles.infoContainerID}>
+            <Text style={styles.labelID}>ID:</Text>
+            <Text style={styles.valueID}>
+              {product.id || product._id || 'N/A'}
+            </Text>
+          </View>
+          <View style={styles.infoContainerID}>
+            <Text style={styles.labelID}>{'Información extra'}</Text>
+          </View>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Nombre</Text>
+          <Text style={styles.value}>{productName}</Text>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Descripción</Text>
+          <Text style={styles.value}>{productDescription}</Text>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Logo</Text>
+        </View>
         <View style={styles.logoContainer}>
           {logo ? (
             <Image
@@ -94,27 +121,12 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>ID</Text>
-          <Text style={styles.value}>{product.id || product._id || 'N/A'}</Text>
-        </View>
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.label}>Nombre</Text>
-          <Text style={styles.value}>{productName}</Text>
-        </View>
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.label}>Descripción</Text>
-          <Text style={styles.value}>{productDescription}</Text>
-        </View>
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.label}>Fecha de Lanzamiento</Text>
+          <Text style={styles.label}>Fecha Liberación</Text>
           <Text style={styles.value}>{formatDate(releaseDate)}</Text>
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Fecha de Revisión</Text>
+          <Text style={styles.label}>Fecha Revisión</Text>
           <Text style={styles.value}>{formatDate(revisionDate)}</Text>
         </View>
 
@@ -149,13 +161,10 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Pressable
-              style={styles.closeButton}
-              onPress={handleCloseModal}
-            >
+            <Pressable style={styles.closeButton} onPress={handleCloseModal}>
               <Text style={styles.closeButtonText}>✕</Text>
             </Pressable>
-            
+
             <Text style={styles.modalTitle}>Confirmar Eliminación</Text>
             <Text style={styles.modalMessage}>
               ¿Estás seguro de que deseas eliminar este producto?
@@ -196,7 +205,7 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f4f1',
+    backgroundColor: '#ffffff',
   },
   content: {
     padding: 20,
@@ -204,18 +213,16 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 32,
   },
   logo: {
     width: 200,
-    height: 200,
+    height: 100,
     borderRadius: 16,
     backgroundColor: '#ffffff',
   },
   logoPlaceholder: {
     width: 200,
     height: 200,
-    borderRadius: 16,
     backgroundColor: '#e0ddd8',
     alignItems: 'center',
     justifyContent: 'center',
@@ -224,22 +231,41 @@ const styles = StyleSheet.create({
     color: '#6c6760',
     fontSize: 16,
   },
-  infoContainer: {
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#1d1b18',
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 1,
+  infoTitle: {
+    paddingVertical: 50,
   },
-  label: {
-    fontSize: 12,
+  infoContainerID: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 16,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  labelID: {
+    fontSize: 20,
     fontWeight: '600',
     color: '#6c6760',
-    textTransform: 'uppercase',
+    transform: 'uppercase',
+    marginBottom: 4,
+  },
+  valueID: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#6c6760',
+    transform: 'uppercase',
+    marginBottom: 4,
+  },
+  infoContainer: {
+    backgroundColor: '#ffffff',
+    padding: 16,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#6c6760',
     marginBottom: 4,
   },
   value: {
@@ -252,14 +278,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   editButton: {
-    backgroundColor: '#2f80ed',
-    borderRadius: 12,
+    backgroundColor: '#cac6be',
     paddingVertical: 16,
     alignItems: 'center',
-    shadowColor: '#2f80ed',
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
     elevation: 4,
   },
   editButtonPressed: {
@@ -267,19 +288,14 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.98 }],
   },
   editButtonText: {
-    color: '#ffffff',
+    color: '#000000',
     fontSize: 16,
     fontWeight: '600',
   },
   deleteButton: {
     backgroundColor: '#dc2626',
-    borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
-    shadowColor: '#dc2626',
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
     elevation: 4,
   },
   deleteButtonPressed: {
@@ -311,7 +327,6 @@ const styles = StyleSheet.create({
     right: 16,
     width: 32,
     height: 32,
-    borderRadius: 16,
     backgroundColor: '#e0ddd8',
     alignItems: 'center',
     justifyContent: 'center',
@@ -343,7 +358,6 @@ const styles = StyleSheet.create({
   cancelButton: {
     flex: 1,
     backgroundColor: '#e0ddd8',
-    borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
   },
@@ -358,7 +372,6 @@ const styles = StyleSheet.create({
   confirmDeleteButton: {
     flex: 1,
     backgroundColor: '#dc2626',
-    borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
   },
