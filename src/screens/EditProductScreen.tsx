@@ -97,7 +97,7 @@ const EditProductScreen = ({ route, navigation }: Props) => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>
-        {isEditing ? 'Editar Producto' : 'Crear Producto'}
+        {isEditing ? 'Editar Producto' : 'Formulario de Registro'}
       </Text>
       <View style={styles.inputGroup}>
         <Text style={styles.label}>ID *</Text>
@@ -189,7 +189,7 @@ const EditProductScreen = ({ route, navigation }: Props) => {
         disabled={saving}
       >
         <Text style={styles.saveButtonText}>
-          {saving ? 'Guardando...' : 'Guardar Cambios'}
+          {saving ? 'Guardando...' : 'Enviar'}
         </Text>
       </Pressable>
 
@@ -209,7 +209,7 @@ const EditProductScreen = ({ route, navigation }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f4f1',
+    backgroundColor: '#ffffff',
   },
   content: {
     padding: 20,
@@ -229,12 +229,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#6c6760',
-    textTransform: 'uppercase',
     marginBottom: 8,
   },
   input: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
     borderWidth: 1,
     borderColor: '#d1cfc9',
     paddingHorizontal: 16,
@@ -254,12 +252,11 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   saveButton: {
-    backgroundColor: '#2f80ed',
-    borderRadius: 12,
+    backgroundColor: '#ffdd00',
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 24,
-    shadowColor: '#2f80ed',
+    shadowColor: '#ffdd00',
     shadowOpacity: 0.3,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
@@ -274,13 +271,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
   },
   saveButtonText: {
-    color: '#ffffff',
+    color: '#000000',
     fontSize: 16,
     fontWeight: '600',
   },
   resetButton: {
     backgroundColor: '#6b7280',
-    borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 12,

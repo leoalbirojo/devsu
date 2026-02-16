@@ -18,16 +18,20 @@ function App() {
         <StatusBar barStyle="dark-content" />
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ title: 'BANCO' }}
+            />
             <Stack.Screen
               name="ProductDetail"
               component={ProductDetailScreen}
-              options={{ title: 'Detalle del Producto' }}
+              options={{ title: 'BANCO' }}
             />
             <Stack.Screen
               name="EditProduct"
               component={EditProductScreen}
-              options={{ title: 'Editar Producto' }}
+              options={{ title: 'BANCO' }}
             />
           </Stack.Navigator>
         </NavigationContainer>
