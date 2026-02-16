@@ -136,6 +136,7 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
               styles.editButton,
               pressed && styles.editButtonPressed,
             ]}
+            testID='editbtn'
             onPress={() => navigation.navigate('EditProduct', { product })}
           >
             <Text style={styles.editButtonText}>Editar</Text>
@@ -146,6 +147,7 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
               styles.deleteButton,
               pressed && styles.deleteButtonPressed,
             ]}
+            testID='deletebtn'
             onPress={handleOpenDeleteModal}
           >
             <Text style={styles.deleteButtonText}>Eliminar</Text>
@@ -161,7 +163,9 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Pressable style={styles.closeButton} onPress={handleCloseModal}>
+            <Pressable style={styles.closeButton}
+            testID='closemdl'
+            onPress={handleCloseModal}>
               <Text style={styles.closeButtonText}>✕</Text>
             </Pressable>
 
@@ -177,6 +181,7 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
                   pressed && styles.confirmDeleteButtonPressed,
                   deleting && styles.confirmDeleteButtonDisabled,
                 ]}
+                testID='deletebtnmodal'
                 onPress={handleConfirmDelete}
                 disabled={deleting}
               >
@@ -189,6 +194,7 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
                   styles.cancelButton,
                   pressed && styles.cancelButtonPressed,
                 ]}
+                testID='cancelbtn'
                 onPress={handleCloseModal}
               >
                 <Text style={styles.cancelButtonText}>Cancelar</Text>
