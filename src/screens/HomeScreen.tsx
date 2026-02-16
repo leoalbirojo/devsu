@@ -34,14 +34,11 @@ export const getItemLabel = (item: Product): string => {
   return 'Untitled item';
 };
 
-export const getItemDescription = (item: Product): string | null => {
-  if (typeof item.description === 'string' && item.description.trim()) {
-    return item.description;
+export const getItemId = (item: Product): string | null | undefined => {
+  if (item.id !== undefined) {
+    return String(item.id);
   }
-  if (typeof item.summary === 'string' && item.summary.trim()) {
-    return item.summary;
-  }
-  return null;
+  return undefined;
 };
 
 const HomeScreen = ({ navigation }: Props) => {
@@ -61,20 +58,17 @@ const HomeScreen = ({ navigation }: Props) => {
   }, [products, query]);
 
   const renderItem = ({ item }: ListRenderItemInfo<Product>) => {
-    const description = getItemDescription(item);
+    const itemId = getItemId(item);
 
     return (
       <Pressable
-        style={({ pressed }) => [
-          styles.card,
-          pressed && styles.cardPressed,
-        ]}
+        style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
         onPress={() => navigation.navigate('ProductDetail', { product: item })}
       >
         <Text style={styles.cardTitle}>{getItemLabel(item)}</Text>
-        {description ? (
+        {itemId ? (
           <Text style={styles.cardSubtitle} numberOfLines={2}>
-            {description}
+            {'ID:' + itemId}
           </Text>
         ) : null}
       </Pressable>
@@ -166,7 +160,6 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#ffffff',
     padding: 16,
-    marginBottom: 12,
     shadowColor: '#1d1b18',
     shadowOpacity: 0.08,
     shadowRadius: 8,
