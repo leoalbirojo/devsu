@@ -15,7 +15,7 @@ import type { RootStackParamList } from '../types/navigation';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const getItemLabel = (item: Product): string => {
+export const getItemLabel = (item: Product): string => {
   if (typeof item.title === 'string' && item.title.trim()) {
     return item.title;
   }
@@ -34,7 +34,7 @@ const getItemLabel = (item: Product): string => {
   return 'Untitled item';
 };
 
-const getItemDescription = (item: Product): string | null => {
+export const getItemDescription = (item: Product): string | null => {
   if (typeof item.description === 'string' && item.description.trim()) {
     return item.description;
   }
@@ -139,13 +139,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 16,
-    backgroundColor: '#f6f4f1',
   },
   searchInput: {
-    borderRadius: 12,
     borderWidth: 1,
     borderColor: '#d1cfc9',
-    backgroundColor: '#fffaf3',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 16,
     paddingVertical: 10,
     fontSize: 16,
@@ -167,7 +165,6 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
     padding: 16,
     marginBottom: 12,
     shadowColor: '#1d1b18',
@@ -202,11 +199,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   createButton: {
-    backgroundColor: '#10b981',
-    borderRadius: 12,
+    backgroundColor: '#ffdd00',
     paddingVertical: 16,
     alignItems: 'center',
-    shadowColor: '#10b981',
     shadowOpacity: 0.3,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
@@ -217,7 +212,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.98 }],
   },
   createButtonText: {
-    color: '#ffffff',
+    color: 'black',
     fontSize: 16,
     fontWeight: '600',
   },

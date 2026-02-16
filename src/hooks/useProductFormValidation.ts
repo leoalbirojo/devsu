@@ -4,7 +4,7 @@ import useProducts from './useProducts';
 interface UseProductFormValidationProps {
   isEditing: boolean;
   initialProduct?: {
-    id?: string;
+    id?: string | number;
     name?: string;
     description?: string;
     logo?: string;
@@ -113,12 +113,19 @@ export const useProductFormValidation = ({
     if (releaseDateError) {
       setReleaseDateError('');
     }
-  };
-
-  const handleRevisionDateChange = (newDate: string) => {
-    setRevisionDate(newDate);
-    if (revisionDateError) {
-      setRevisionDateError('');
+    
+    // Automatically set revision date to one year after release date
+    if (newDate.trim()) {
+      const relDate = new Date(newDate);
+      const revDate = new Date(relDate);
+      revDate.setFullYear(relDate.getFullYear() + 1);
+      const revDateString = revDate.toISOString().split('T')[0];
+      setRevisionDate(revDateString);
+      if (revisionDateError) {
+        setRevisionDateError('');
+      }
+    } else {
+      setRevisionDate('');
     }
   };
 
@@ -214,6 +221,33 @@ export const useProductFormValidation = ({
     return !hasErrors;
   };
 
+  const resetForm = () => {
+    setId(String(initialProduct?.id || ''));
+    setName(initialProduct?.name || '');
+    setDescription(initialProduct?.description || '');
+    setLogo(initialProduct?.logo || '');
+    const releaseDateValue = initialProduct?.date_release || '';
+    setReleaseDate(releaseDateValue);
+    setIdError('');
+    setIdValidating(false);
+    setNameError('');
+    setDescriptionError('');
+    setLogoError('');
+    setReleaseDateError('');
+    setRevisionDateError('');
+    
+    // Always recalculate revision date based on release date
+    if (releaseDateValue.trim()) {
+      const relDate = new Date(releaseDateValue);
+      const revDate = new Date(relDate);
+      revDate.setFullYear(relDate.getFullYear() + 1);
+      const revDateString = revDate.toISOString().split('T')[0];
+      setRevisionDate(revDateString);
+    } else {
+      setRevisionDate('');
+    }
+  };
+
   return {
     id,
     name,
@@ -240,7 +274,7 @@ export const useProductFormValidation = ({
     handleDescriptionChange,
     handleLogoChange,
     handleReleaseDateChange,
-    handleRevisionDateChange,
     validateForm,
+    resetForm,
   };
 };

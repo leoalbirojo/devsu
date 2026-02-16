@@ -15,19 +15,17 @@ import useProducts from '../hooks/useProducts';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ProductDetail'>;
 
-const formatDate = (dateString?: string): string => {
+export const formatDate = (dateString?: string): string => {
   if (!dateString) return 'N/A';
   
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  } catch {
-    return dateString;
-  }
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString;
+  
+  return date.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 };
 
 const ProductDetailScreen = ({ route, navigation }: Props) => {
@@ -146,11 +144,18 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
       <Modal
         visible={showDeleteModal}
         transparent={true}
-        animationType="fade"
+        animationType="slide"
         onRequestClose={handleCloseModal}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
+            <Pressable
+              style={styles.closeButton}
+              onPress={handleCloseModal}
+            >
+              <Text style={styles.closeButtonText}>✕</Text>
+            </Pressable>
+            
             <Text style={styles.modalTitle}>Confirmar Eliminación</Text>
             <Text style={styles.modalMessage}>
               ¿Estás seguro de que deseas eliminar este producto?
@@ -289,22 +294,41 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   modalContent: {
     backgroundColor: '#ffffff',
-    borderRadius: 24,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
     padding: 24,
-    margin: 20,
-    width: '80%',
-    maxWidth: 400,
+    paddingTop: 16,
+    width: '100%',
+    maxHeight: '50%',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#e0ddd8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
+  },
+  closeButtonText: {
+    color: '#6c6760',
+    fontSize: 16,
+    fontWeight: '600',
+    lineHeight: 18,
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: '700',
     color: '#1d1b18',
     marginBottom: 12,
+    marginTop: 24,
   },
   modalMessage: {
     fontSize: 16,

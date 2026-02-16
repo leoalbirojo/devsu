@@ -40,8 +40,8 @@ const EditProductScreen = ({ route, navigation }: Props) => {
     handleDescriptionChange,
     handleLogoChange,
     handleReleaseDateChange,
-    handleRevisionDateChange,
     validateForm,
+    resetForm,
   } = useProductFormValidation({ isEditing, initialProduct: product });
 
   const [saving, setSaving] = useState(false);
@@ -88,6 +88,10 @@ const EditProductScreen = ({ route, navigation }: Props) => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleReset = () => {
+    resetForm();
   };
 
   return (
@@ -166,11 +170,11 @@ const EditProductScreen = ({ route, navigation }: Props) => {
       <View style={styles.inputGroup}>
         <Text style={styles.label}>Fecha de Revisión *</Text>
         <TextInput
-          style={[styles.input, revisionDateError && styles.inputError]}
+          style={[styles.input, styles.inputDisabled, revisionDateError && styles.inputError]}
           value={revisionDate}
-          onChangeText={handleRevisionDateChange}
-          placeholder="YYYY-MM-DD"
+          placeholder="Se calcula automáticamente (1 año después del lanzamiento)"
           placeholderTextColor="#8c8c8c"
+          editable={false}
         />
         {revisionDateError ? <Text style={styles.errorText}>{revisionDateError}</Text> : null}
       </View>
@@ -187,6 +191,16 @@ const EditProductScreen = ({ route, navigation }: Props) => {
         <Text style={styles.saveButtonText}>
           {saving ? 'Guardando...' : 'Guardar Cambios'}
         </Text>
+      </Pressable>
+
+      <Pressable
+        style={({ pressed }) => [
+          styles.resetButton,
+          pressed && styles.resetButtonPressed,
+        ]}
+        onPress={handleReset}
+      >
+        <Text style={styles.resetButtonText}>Reiniciar</Text>
       </Pressable>
     </ScrollView>
   );
@@ -260,6 +274,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0,
   },
   saveButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  resetButton: {
+    backgroundColor: '#6b7280',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginTop: 12,
+    shadowColor: '#6b7280',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+  },
+  resetButtonPressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.98 }],
+  },
+  resetButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
