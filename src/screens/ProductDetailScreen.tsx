@@ -167,20 +167,10 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
 
             <Text style={styles.modalTitle}>Confirmar Eliminación</Text>
             <Text style={styles.modalMessage}>
-              ¿Estás seguro de que deseas eliminar este producto?
+              ¿Estás seguro de que deseas eliminar el producto {productName}?
             </Text>
 
             <View style={styles.modalButtons}>
-              <Pressable
-                style={({ pressed }) => [
-                  styles.cancelButton,
-                  pressed && styles.cancelButtonPressed,
-                ]}
-                onPress={handleCloseModal}
-              >
-                <Text style={styles.cancelButtonText}>Cancelar</Text>
-              </Pressable>
-
               <Pressable
                 style={({ pressed }) => [
                   styles.confirmDeleteButton,
@@ -193,6 +183,15 @@ const ProductDetailScreen = ({ route, navigation }: Props) => {
                 <Text style={styles.confirmDeleteButtonText}>
                   {deleting ? 'Eliminando...' : 'Eliminar'}
                 </Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cancelButton,
+                  pressed && styles.cancelButtonPressed,
+                ]}
+                onPress={handleCloseModal}
+              >
+                <Text style={styles.cancelButtonText}>Cancelar</Text>
               </Pressable>
             </View>
           </View>
@@ -319,7 +318,7 @@ const styles = StyleSheet.create({
     padding: 24,
     paddingTop: 16,
     width: '100%',
-    maxHeight: '50%',
+    height: '30%',
   },
   closeButton: {
     position: 'absolute',
@@ -327,7 +326,6 @@ const styles = StyleSheet.create({
     right: 16,
     width: 32,
     height: 32,
-    backgroundColor: '#e0ddd8',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1,
@@ -352,7 +350,8 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   modalButtons: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+    height: 120,
     gap: 12,
   },
   cancelButton: {
