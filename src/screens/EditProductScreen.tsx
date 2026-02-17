@@ -187,6 +187,7 @@ const EditProductScreen = ({ route, navigation }: Props) => {
         ]}
         onPress={handleSave}
         disabled={saving}
+        testID='savebtn'
       >
         <Text style={styles.saveButtonText}>
           {saving ? 'Guardando...' : 'Enviar'}
@@ -199,6 +200,7 @@ const EditProductScreen = ({ route, navigation }: Props) => {
           pressed && styles.resetButtonPressed,
         ]}
         onPress={handleReset}
+        testID='resetbtn'
       >
         <Text style={styles.resetButtonText}>Reiniciar</Text>
       </Pressable>
