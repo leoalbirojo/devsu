@@ -65,12 +65,15 @@ const HomeScreen = ({ navigation }: Props) => {
         style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
         onPress={() => navigation.navigate('ProductDetail', { product: item })}
       >
-        <Text style={styles.cardTitle}>{getItemLabel(item)}</Text>
-        {itemId ? (
-          <Text style={styles.cardSubtitle} numberOfLines={2}>
-            {'ID:' + itemId}
-          </Text>
-        ) : null}
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>{getItemLabel(item)}</Text>
+          {itemId ? (
+            <Text style={styles.cardSubtitle} numberOfLines={2}>
+              {'ID:' + itemId}
+            </Text>
+          ) : null}
+        </View>
+        <Text style={styles.chevron}>›</Text>
       </Pressable>
     );
   };
@@ -166,10 +169,16 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
     elevation: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   cardPressed: {
     opacity: 0.7,
     transform: [{ scale: 0.98 }],
+  },
+  cardContent: {
+    flex: 1,
   },
   cardTitle: {
     fontSize: 16,
@@ -179,6 +188,11 @@ const styles = StyleSheet.create({
   cardSubtitle: {
     marginTop: 6,
     color: '#6c6760',
+  },
+  chevron: {
+    fontSize: 20,
+    color: '#6c6760',
+    marginLeft: 8,
   },
   emptyState: {
     flexGrow: 1,
