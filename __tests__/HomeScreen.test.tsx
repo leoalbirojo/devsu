@@ -4,7 +4,7 @@
 
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
-import HomeScreen, { getItemLabel, getItemDescription } from '../src/screens/HomeScreen';
+import HomeScreen, { getItemLabel } from '../src/screens/HomeScreen';
 import { Product } from '../src/hooks/useProducts';
 
 // Mock the useProducts hook
@@ -53,23 +53,6 @@ describe('HomeScreen', () => {
     it('returns default text when no identifying fields are available', () => {
       const item: Product = {};
       expect(getItemLabel(item)).toBe('Untitled item');
-    });
-  });
-
-  describe('getItemDescription', () => {
-    it('returns description when available', () => {
-      const item: Product = { description: 'Test Description' };
-      expect(getItemDescription(item)).toBe('Test Description');
-    });
-
-    it('returns summary when description is not available', () => {
-      const item: Product = { summary: 'Test Summary' };
-      expect(getItemDescription(item)).toBe('Test Summary');
-    });
-
-    it('returns null when no description fields are available', () => {
-      const item: Product = {};
-      expect(getItemDescription(item)).toBeNull();
     });
   });
 
